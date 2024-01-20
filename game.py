@@ -24,37 +24,47 @@ isRedMax = False
 
 
 y = 0
+x = 0
 
-
+colorApple = (255,150,100)
+x_apple = 100
+y_apple = 200
 
 while running:
  # Держим цикл на правильной скорости 
     clock.tick(FPS)
     screen.fill((red, green, blue))
-    # green = green + 1
-
-    if isRedMax == True:
-        green = green + 1
-    else:
-         red = red + 1
-         if red == 255:
-          red = 0
-          isRedMax = True
-    print(red)
-    
-
-
-    pygame.draw.rect(screen,(100,50,200),[0,y,100,200])  
-    y = y +0.1
-
-        #Ввод процесса (события)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False 
-    pygame.display.flip()
-    
-    
   
+    
+
+    pygame.draw.rect(screen,(100,50,200),[x,y,100,200])  
+    #яблоко рисуем
+    pygame.draw.circle(screen, colorApple, [x_apple,y_apple],15)
 
 
+    #Проверка нажатия на клавишы движения
+    for event in pygame.event.get():
+        #check for closing window
+        if event.type == pygame.QUIT:
+            print("quit")
+            running = False
+        #если нажали на кнопку на клавиатуре
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_w:
+                print("нажали на w")
+                y = y - 10
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_a:
+                print("нажали на a")    
+                x = x - 10 
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_s:
+                print("нажали на s")  
+                y = y + 10 
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_d:
+                print("нажали на d")   
+                x = x + 10
+
+    pygame.display.flip()
 pygame.quit()
