@@ -48,10 +48,17 @@ pygame.display.update()
 pygame.time.wait(5000)
 
 #змея
-mino_img = pygame.image.load("./snake.png")
-scale_mino = pygame.transform.scale(mino_img, (200,200))
+mino_img = pygame.image.load("./snakes.png")
+scale_mino = pygame.transform.scale(mino_img, (400,200))
 mino_rect = scale_mino.get_rect()
 mino_rect.center = 100, 100
+
+score = 0
+score = score + 1
+font_style = pygame.font.SysFont("Times New Roman", 50)
+msg = font_style.render(f"Score: {score}", True, (100, 255,100),(100,40,200))
+
+gms = font_style.render("game over", True, RED, WIDTH)
 
 
 #pygame.time.wait(5000)
@@ -63,20 +70,35 @@ while running:
     screen.fill(screenColor)
     screen.blit(scale,scale_rect)
     screen.blit(scale_mino,mino_rect)
+    screen.blit(msg,[20,20])
     #рисуем прямоугольник в screen
     pygame.draw.rect(screen,(100,50,200),[x,y,width_player,height_player])  
+
     #яблоко рисуем
     pygame.draw.circle(screen, colorApple, [x_apple,y_apple],15)
     if (x<0 or x > WIDTH - width_player):
         running = False
+        screen.blit(gms, [WIDTH//2-100,HEIGHT//2-50])
+        pygame.display.flip()
+        pygame.time.wait(5000)
         pass
+
+
+
+
     # столкновение с шариком
     if ((x < x_apple+15 and x_apple-15 < x + width_player ) and (y < y_apple+15 and y_apple-15 < y + height_player) ):
-     width_player += 10
-     x_apple = random.randint(0,WIDTH)
-     y_apple = random.randint(0,HEIGHT)
-     scale_rect.center = x_apple, y_apple
-     pygame.draw.circle(screen, colorApple, [x_apple,y_apple],15)
+        width_player += 10
+        x_apple = random.randint(0,WIDTH)
+        y_apple = random.randint(0,HEIGHT)
+        scale_rect.center = x_apple, y_apple
+        pygame.draw.circle(screen, colorApple, [x_apple,y_apple],15)
+        score = score + 1
+        msg = font_style.render(f"Score: {score}", True, (100, 255,100),(100,40,200))
+
+     
+
+
 
     #если нажали кнавишу
     keys = pygame.key.get_pressed()
